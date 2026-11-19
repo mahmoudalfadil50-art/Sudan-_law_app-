@@ -18,21 +18,23 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.x'
-          channel: 'stable'
-          cache: true
+      - name: Install latest Flutter manually
+        run: |
+          git clone https://github.com/flutter/flutter.git -b master --depth 1 $HOME/flutter
+          echo "$HOME/flutter/bin" >> $GITHUB_PATH
+          $HOME/flutter/bin/flutter --version
 
       - name: Install dependencies
-        run: flutter pub get
+        working-directory: تطبيق قانون السودان
+        run: $HOME/flutter/bin/flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        working-directory: تطبيق قانون السودان
+        run: $HOME/flutter/bin/flutter build apk --release
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: تطبيق قانون السودان/build/app/outputs/flutter-apk/app-release.apk
+
