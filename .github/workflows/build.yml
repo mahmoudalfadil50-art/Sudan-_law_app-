@@ -22,17 +22,18 @@ jobs:
         run: |
           git clone https://github.com/flutter/flutter.git -b master --depth 1 $HOME/flutter
           echo "$HOME/flutter/bin" >> $GITHUB_PATH
-          flutter --version
+          $HOME/flutter/bin/flutter --version
 
       - name: Install dependencies
-        run: flutter pub get
+        run: $HOME/flutter/bin/flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        run: $HOME/flutter/bin/flutter build apk --release
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+
 
